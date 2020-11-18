@@ -1,0 +1,8 @@
+
+
+
+# /etc/login.conf
+# unbound:\
+# :openfiles=4096:\
+# :daemon_timeout=300:\
+# :tc=daemon:

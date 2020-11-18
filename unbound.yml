@@ -1,0 +1,38 @@
+---
+- name: Configure unbound
+  hosts: all_hosts
+  user: puffy
+  become: true
+  become_method: doas
+
+  tasks:
+    - name: "unbound - Create trust anchor"
+      shell: unbound-anchor
+      register: unbound_anchor
+      tags: unbound
+
+    - name: "unbound - Control setup"
+      shell: unbound-control-setup
+      register: unbound_control_setup
+      tags: unbound
+
+    - name: "unbound - Template root.hints"
+      template:
+        src: "root.hints"
+        dest: "{{ unbound_root_hints }}"
+      tags: unbound
+
+    - name: "unbound - Configure /var/unbound/etc/unbound.conf"
+      template:
+        src: "unbound.conf"
+        dest: "/var/unbound/etc/unbound.conf"
+      register: unbound_config
+      tags: unbound
+
+      # Add missing config check
+
+    - name: "unbound - Reload config" # Using the big ad blocklist fails unbound-checkconf
+      shell: unbound-control reload
+      register: unbound_config_check
+      when: unbound_config is changed
+      tags: unbound

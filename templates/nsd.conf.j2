@@ -1,0 +1,74 @@
+server:
+{% if nsd_ips %}
+{% for ip in nsd_ips %}
+  ip-address: {{ ip }}
+{% endif %}
+{% if nsd_port %}
+  port: {{ nsd_port }}
+{% endif %}
+{% if nsd_hide_version %}
+  hide-version: {{ nsd_hide_version }}
+{% endif %}
+{% if nsd_hide_version %}
+  hide-identity: {{ nsd_hide_identity }}
+{% endif %}
+{% if nsd_verbosity %}
+  verbosity: {{ nsd_verbosity }}
+{% endif %}
+{% if nsd_statistics %}
+  statistics: {{ nsd_statistics }}
+{% endif %}
+{% if nsd_use_tls %}
+  tls-service-key: "/etc/ssl/private/{{ nsd_use_tls }}.key"
+  tls-service-pem: "/etc/ssl/{{ nsd_use_tls }}.fullchain.pem"
+  tls-service-ocsp: "/etc/ssl/{{ nsd_use_tls }}.der"
+{% endif %}
+
+{% if nsd_remote_control %}
+remote-control:
+  control-enable: {{ nsd_remote_control }}
+  control-interface: "/var/run/nsd.sock"
+  server-key-file: "/var/nsd/etc/nsd_server.key"
+  server-cert-file: "/var/nsd/etc/nsd_server.pem"
+  control-key-file: "/var/nsd/etc/nsd_control.key"
+  control-cert-file: "/var/nsd/etc/nsd_control.pem"
+{% endif %}
+
+{% if nsd_keys %}
+{% for key in nsd_keys %}
+key:
+   name: "{{ key.name }}"
+   algorithm: {{ key.algo }}
+   secret: "{{ key.secret }}"
+{% endfor %}
+{% endif %}
+
+{% if nsd_patterns %}
+{% for pattern in nsd_patterns %}
+pattern:
+  name: "{{ pattern.name }}"
+  {% if pattern.notify %}
+  notify: {{ pattern.notify }} {{ pattern.key }}
+  {% endif %}
+  {% if pattern.providexfr %}
+  provide-xfr: AXFR {{ pattern.providexfr }} {{ pattern.key }}
+  {% endif %}
+  {% if pattern.allownotify %}
+  allownotify: {{ pattern.allownotify }} {{ pattern.key }}
+  {% endif %}
+  {% if pattern.requestxfr %}
+  request-xfr: AXFR {{ pattern.requestxfr }} {{ pattern.key }}
+  {% endif %}
+{% endfor %}
+{% endif %}
+
+{% if nsd_zones %}
+{% for zone in nsd_zones %}
+zone:
+  name: "{{ zone.name }}"
+  zonefile: "{{ zone.file }}"
+  {% if zone.includepattern %}
+  include-pattern: "{{ zone.includepattern }}"
+  {% endif %}
+{% endfor %}
+{% endif %}

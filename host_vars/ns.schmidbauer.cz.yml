@@ -1,0 +1,17 @@
+# NSD
+nsd_ips:
+  - 127.0.0.1
+  - 193.235.207.51
+  - ::1
+  - 2a03:f80:420:193:235:207:51:1
+
+nsd_use_tls: ns.schmidbauer.cz
+
+nsd_patterns:
+  - { name: replicate_to, key: seckey, notify: 151.236.30.179@5353, providexfr: 151.236.30.179@5353 }
+
+nsd_zones:
+  - { name: schmidbauer.cz, file: "master/schmidbauer.cz", includepattern: replicate_to }
+
+# Unbound
+unbound_use_tls: ns.schmidbauer.cz

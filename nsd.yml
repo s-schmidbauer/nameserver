@@ -1,0 +1,54 @@
+---
+- name: Configure nsd
+  hosts: all_hosts
+  user: puffy
+  become: true
+  become_method: doas
+
+  tasks:
+    - name: "nsd - Generate secret"
+      shell: dd if=/dev/urandom of=/dev/stdout status=none count=1 bs=64 | openssl base64 | tr -d '\n'
+      register: nsd_secret_out
+      no_log: true
+      tags: nsd
+      when: nsd_make_key == True
+
+    - set_fact:
+      nsd_keys:
+        - { name: {{ nsd_key_name }}, algo: {{ nsd_key_algo }}, secret: "{{ nsd_sec }}" }
+      when: nsd_make_key == True
+
+    - name: "nsd - Configure /var/nsd/etc/nsd.conf"
+      template:
+        src: "nsd.conf"
+        dest: "/var/nsd/etc/nsd.conf"
+      register: nsd_config
+      tags: nsd
+
+    - name: "nsd - Add secret"
+      shell: nsd-control add_tsig {{ nsd_key_name }} "{{ nsd_sec }}" {{ nsd_key_algo }}
+      register: nsd_add_secret
+      tags: nsd
+      when: nsd_make_key == True
+
+    - name: "nsd - Control setup"
+      shell: nsd-control-setup
+      register: nsd_control_setup
+      tags: nsd
+
+    - name: "unbound - Check config"
+      shell: nsd-checkconf /var/nsd/etc/nsd.conf
+      register: nsd_config_check
+      tags: nsd
+
+    - name: "unbound - Reload config if it's OK and changed"
+      shell: nsd-control reconfig
+      register: nsd_reconfig
+      when: nsd_config_check and nsd_config is changed
+      tags: nsd
+
+    - name: "unbound - Reload zones"
+      shell: nsd-control reload
+      register: nsd_config_reload
+      when: nsd_config_check
+      tags: nsd

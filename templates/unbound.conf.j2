@@ -1,0 +1,112 @@
+server:
+  {% if unbound_interfaces %}
+  {% for interface in unbound_interfaces  %}
+  interface: {{ interface }}
+  {% endfor %}
+  {% endif %}
+
+  {% if unbound_acl %}
+  {% for acl in unbound_acl  %}
+  access-control: {{ acl }}
+  {% endfor %}
+  {% endif %}
+
+  {% if unbound_ipv6 }
+  do-ip6: {{ unbound_ipv6 }}
+  {% endif %}
+
+  root-hints: "{{ unbound_root_hints }}"
+
+  #Adblocking done with /usr/local/bin/adblocks.sh which creates adblocks.conf
+  #include: "/var/unbound/etc/adblocks.conf"
+
+  #TLS (DoT)
+  {% if nsd_use_tls %}
+  tls-service-key: "/etc/ssl/private/{{ unbound_use_tls }}.key"
+  tls-service-pem: "/etc/ssl/{{ unbound_use_tls }}.fullchain.pem"
+  {% if nsd_use_tls %}
+  tls-port: {{ unbound_tls_port }}
+  {% endif %}
+  {% endif %}
+  #do-udp: no
+  #udp-upstream-without-downstream: yes
+
+  {% if unbound_local_zones %}
+  {% for zone in unbound_local_zones  %}
+  local-zone: "{{ zone.name }}" {{ zone.option }}
+  domain-insecure: "{{ zone.name }}"
+  {% endfor %}
+  {% endif %}
+
+  #security
+  {% if unbound_do_not_query_localhost %}
+  do-not-query-localhost: {{ unbound_do_not_query_localhost }}
+  {% endif %}
+  {% if unbound_trust_anchor_file }
+  auto-trust-anchor-file: "{{ unbound_trust_anchor_file }}"
+  {% if unbound_hide_identity }
+  hide-identity: {{ unbound_hide_identity }}
+  {% endif %}
+  {% if unbound_hide_version }
+  hide-version: {{ unbound_hide_version }}
+  {% endif %}
+  {% if unbound_use_caps_for_id }
+  use-caps-for-id: {{ unbound_use_caps_for_id }}
+  {% endif %}
+  {% if unbound_harden_glue }
+  harden-glue: {{ unbound_harden_glue }}
+  {% endif %}
+  {% if unbound_deny_any }
+  deny-any: {{ unbound_deny_any }}
+  {% endif %}
+  {% if unbound_qname_minimisation }
+  qname-minimisation: {{ unbound_qname_minimisation }}
+  {% endif %}
+  {% if unbound_harden_dnssec_stripped }
+  harden-dnssec-stripped: {{ unbound_harden_dnssec_stripped }}
+  {% endif %}
+  {% endif %}
+  {% if unbound_aggressive_nsec }
+  aggressive-nsec: "{{ unbound_aggressive_nsec }}"
+  {% endif %}
+
+  #ratelimiting: 1000 queries per second total, 100 per ip -> 10 hosts
+  incoming-num-tcp: 1000
+  ratelimit: 1000
+  ip-ratelimit: 100
+
+  {% if unbound_log_queries }
+  log-queries: "{{ unbound_log_queries }}"
+  {% endif %}
+  {% if unbound_log_replies }
+  log-replies: "{{ unbound_log_replies }}"
+  {% endif %}
+
+  {% if unbound_remote_control %}
+  remote-control:
+    control-enable: {{ unbound_remote_control }}
+    control-use-cert: no
+    control-interface: /var/run/unbound.sock
+  {% endif %}
+
+{% if unbound_stub_zones %}
+{% for zone in unbound_stub_zones  %}
+stub-zone:
+  name: "{{ zone.name }}"
+  stub-addr: {{ zone.stub-address }}
+{% endfor %}
+{% endif %}
+
+{% if unbound_forward_zones %}
+{% for zone in unbound_forward_zones  %}
+forward-zone:
+  name: "{{ zone.name }}"
+  forward-first: {{ zone.forward-first }}
+  {% if zone.forward-addresses %}
+  {% set addresses = zone.forward-addresses.split(',') %}
+  {% for address in addresses %}
+  forward-addr: {{ address }}
+  {% endfor %}
+  {% endif %}
+{% endfor %}
+{% endif %}
