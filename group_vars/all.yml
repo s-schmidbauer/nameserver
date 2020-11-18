@@ -16,10 +16,10 @@ nsd_key_name: seckey
 nsd_key_algo: hmac-sha256     # Currently hardcoded in dd command
 
 nsd_masters:
-  - { ip: 193.235.207.51@5353, key: seckey }
+  - { ip: "193.235.207.51@5353", key: "seckey" }
 
 nsd_slaves:
-  - { ip: 151.236.30.179@5353, key: seckey }
+  - { ip: "151.236.30.179@5353", key: "seckey" }
 
 # Unbound
 unbound_interfaces:
@@ -32,13 +32,13 @@ unbound_acl:
   - ::0/0 allow
 
 unbound_stub_zones:
-  - { name: schmidbauer.cz, stub-address: '127.0.0.1@5353' }  # Pass to NSD
+  - { name: "schmidbauer.cz", stub_address: '127.0.0.1@5353' }  # Pass to NSD
 
 unbound_forward_zones:
-  - { name: '.', forward-first: yes, forward-addresses: "1.1.1.1, 9.9.9.9" }
+  - { name: ".", forward_first: "yes", forward_addresses: "1.1.1.1,9.9.9.9" }
 
 unbound_local_zones:
-  - { name:  }
+  - { name: "schmidbauer.cz", option: "nodefault" }
 
 unbound_ipv6: 'yes'
 unbound_auto_trust_anchor_file: /var/unbound/db/root.key
