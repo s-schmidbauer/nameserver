@@ -15,7 +15,7 @@
 
     - set_fact:
         nsd_keys:
-          - { name: "{{ nsd_key_name }}", algo: "{{ nsd_key_algo }}", secret: "{{ nsd_sec }}" }
+          - { name: "{{ nsd_key_name }}", algo: "{{ nsd_key_algo }}", secret: "{{ nsd_secret_out.stdout }}" }
       when: nsd_make_key == True
 
     - name: "nsd - Configure /var/nsd/etc/nsd.conf"
@@ -25,9 +25,10 @@
       register: nsd_config
       tags: nsd
 
-    - name: "nsd - Add secret"
-      shell: nsd-control add_tsig {{ nsd_key_name }} "{{ nsd_sec }}" {{ nsd_key_algo }}
+    - name: "nsd - Update secret"
+      shell: nsd-control update_tsig {{ item.name }} "{{ item.secret }}"
       register: nsd_add_secret
+      with_items: "{{ nsd_keys }}"
       tags: nsd
       when: nsd_make_key == True
 
