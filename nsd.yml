@@ -14,13 +14,13 @@
       when: nsd_make_key == True
 
     - set_fact:
-      nsd_keys:
-        - { name: {{ nsd_key_name }}, algo: {{ nsd_key_algo }}, secret: "{{ nsd_sec }}" }
+        nsd_keys:
+          - { name: "{{ nsd_key_name }}", algo: "{{ nsd_key_algo }}", secret: "{{ nsd_sec }}" }
       when: nsd_make_key == True
 
     - name: "nsd - Configure /var/nsd/etc/nsd.conf"
       template:
-        src: "nsd.conf"
+        src: "nsd.conf.j2"
         dest: "/var/nsd/etc/nsd.conf"
       register: nsd_config
       tags: nsd

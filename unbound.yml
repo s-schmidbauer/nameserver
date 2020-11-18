@@ -24,7 +24,7 @@
 
     - name: "unbound - Configure /var/unbound/etc/unbound.conf"
       template:
-        src: "unbound.conf"
+        src: "unbound.conf.j2"
         dest: "/var/unbound/etc/unbound.conf"
       register: unbound_config
       tags: unbound

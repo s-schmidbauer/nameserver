@@ -1,30 +1,31 @@
 server:
-{% if nsd_ips %}
+{% if nsd_ips is defined %}
 {% for ip in nsd_ips %}
   ip-address: {{ ip }}
+{% endfor %}
 {% endif %}
-{% if nsd_port %}
+{% if nsd_port is defined %}
   port: {{ nsd_port }}
 {% endif %}
-{% if nsd_hide_version %}
+{% if nsd_hide_version is defined %}
   hide-version: {{ nsd_hide_version }}
 {% endif %}
-{% if nsd_hide_version %}
+{% if nsd_hide_version is defined %}
   hide-identity: {{ nsd_hide_identity }}
 {% endif %}
-{% if nsd_verbosity %}
+{% if nsd_verbosity is defined %}
   verbosity: {{ nsd_verbosity }}
 {% endif %}
-{% if nsd_statistics %}
+{% if nsd_statistics is defined %}
   statistics: {{ nsd_statistics }}
 {% endif %}
-{% if nsd_use_tls %}
+{% if nsd_use_tls is defined %}
   tls-service-key: "/etc/ssl/private/{{ nsd_use_tls }}.key"
   tls-service-pem: "/etc/ssl/{{ nsd_use_tls }}.fullchain.pem"
   tls-service-ocsp: "/etc/ssl/{{ nsd_use_tls }}.der"
 {% endif %}
 
-{% if nsd_remote_control %}
+{% if nsd_remote_control is defined %}
 remote-control:
   control-enable: {{ nsd_remote_control }}
   control-interface: "/var/run/nsd.sock"
@@ -34,7 +35,7 @@ remote-control:
   control-cert-file: "/var/nsd/etc/nsd_control.pem"
 {% endif %}
 
-{% if nsd_keys %}
+{% if nsd_keys is defined %}
 {% for key in nsd_keys %}
 key:
    name: "{{ key.name }}"
@@ -43,31 +44,31 @@ key:
 {% endfor %}
 {% endif %}
 
-{% if nsd_patterns %}
+{% if nsd_patterns is defined %}
 {% for pattern in nsd_patterns %}
 pattern:
   name: "{{ pattern.name }}"
-  {% if pattern.notify %}
+  {% if pattern.notify is defined %}
   notify: {{ pattern.notify }} {{ pattern.key }}
   {% endif %}
-  {% if pattern.providexfr %}
+  {% if pattern.providexfr is defined  %}
   provide-xfr: AXFR {{ pattern.providexfr }} {{ pattern.key }}
   {% endif %}
-  {% if pattern.allownotify %}
-  allownotify: {{ pattern.allownotify }} {{ pattern.key }}
+  {% if pattern.allownotify is defined %}
+  allow-notify: {{ pattern.allownotify }} {{ pattern.key }}
   {% endif %}
-  {% if pattern.requestxfr %}
+  {% if pattern.requestxfr is defined %}
   request-xfr: AXFR {{ pattern.requestxfr }} {{ pattern.key }}
   {% endif %}
 {% endfor %}
 {% endif %}
 
-{% if nsd_zones %}
+{% if nsd_zones is defined %}
 {% for zone in nsd_zones %}
 zone:
   name: "{{ zone.name }}"
   zonefile: "{{ zone.file }}"
-  {% if zone.includepattern %}
+  {% if zone.includepattern is defined %}
   include-pattern: "{{ zone.includepattern }}"
   {% endif %}
 {% endfor %}

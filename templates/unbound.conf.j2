@@ -1,17 +1,17 @@
 server:
-  {% if unbound_interfaces %}
+  {% if unbound_interfaces is defined %}
   {% for interface in unbound_interfaces  %}
   interface: {{ interface }}
   {% endfor %}
   {% endif %}
 
-  {% if unbound_acl %}
+  {% if unbound_acl is defined %}
   {% for acl in unbound_acl  %}
   access-control: {{ acl }}
   {% endfor %}
   {% endif %}
 
-  {% if unbound_ipv6 }
+  {% if unbound_ipv6 is defined %}
   do-ip6: {{ unbound_ipv6 }}
   {% endif %}
 
@@ -21,17 +21,17 @@ server:
   #include: "/var/unbound/etc/adblocks.conf"
 
   #TLS (DoT)
-  {% if nsd_use_tls %}
+  {% if nsd_use_tls is defined %}
   tls-service-key: "/etc/ssl/private/{{ unbound_use_tls }}.key"
   tls-service-pem: "/etc/ssl/{{ unbound_use_tls }}.fullchain.pem"
-  {% if nsd_use_tls %}
+  {% if nsd_use_tls is defined %}
   tls-port: {{ unbound_tls_port }}
   {% endif %}
   {% endif %}
   #do-udp: no
   #udp-upstream-without-downstream: yes
 
-  {% if unbound_local_zones %}
+  {% if unbound_local_zones is defined %}
   {% for zone in unbound_local_zones  %}
   local-zone: "{{ zone.name }}" {{ zone.option }}
   domain-insecure: "{{ zone.name }}"
@@ -39,34 +39,34 @@ server:
   {% endif %}
 
   #security
-  {% if unbound_do_not_query_localhost %}
+  {% if unbound_do_not_query_localhost is defined %}
   do-not-query-localhost: {{ unbound_do_not_query_localhost }}
   {% endif %}
-  {% if unbound_trust_anchor_file }
+  {% if unbound_trust_anchor_file is defined %}
   auto-trust-anchor-file: "{{ unbound_trust_anchor_file }}"
   {% if unbound_hide_identity }
   hide-identity: {{ unbound_hide_identity }}
   {% endif %}
-  {% if unbound_hide_version }
+  {% if unbound_hide_version is defined %}
   hide-version: {{ unbound_hide_version }}
   {% endif %}
-  {% if unbound_use_caps_for_id }
+  {% if unbound_use_caps_for_id is defined %}
   use-caps-for-id: {{ unbound_use_caps_for_id }}
   {% endif %}
-  {% if unbound_harden_glue }
+  {% if unbound_harden_glue is defined %}
   harden-glue: {{ unbound_harden_glue }}
   {% endif %}
-  {% if unbound_deny_any }
+  {% if unbound_deny_any is defined %}
   deny-any: {{ unbound_deny_any }}
   {% endif %}
-  {% if unbound_qname_minimisation }
+  {% if unbound_qname_minimisation is defined %}
   qname-minimisation: {{ unbound_qname_minimisation }}
   {% endif %}
-  {% if unbound_harden_dnssec_stripped }
+  {% if unbound_harden_dnssec_stripped is defined %}
   harden-dnssec-stripped: {{ unbound_harden_dnssec_stripped }}
   {% endif %}
   {% endif %}
-  {% if unbound_aggressive_nsec }
+  {% if unbound_aggressive_nsec is defined %}
   aggressive-nsec: "{{ unbound_aggressive_nsec }}"
   {% endif %}
 
@@ -75,34 +75,34 @@ server:
   ratelimit: 1000
   ip-ratelimit: 100
 
-  {% if unbound_log_queries }
+  {% if unbound_log_queries is defined %}
   log-queries: "{{ unbound_log_queries }}"
   {% endif %}
-  {% if unbound_log_replies }
+  {% if unbound_log_replies is defined %}
   log-replies: "{{ unbound_log_replies }}"
   {% endif %}
 
-  {% if unbound_remote_control %}
+  {% if unbound_remote_control is defined %}
   remote-control:
     control-enable: {{ unbound_remote_control }}
     control-use-cert: no
     control-interface: /var/run/unbound.sock
   {% endif %}
 
-{% if unbound_stub_zones %}
-{% for zone in unbound_stub_zones  %}
+{% if unbound_stub_zones is defined %}
+{% for zone in unbound_stub_zones %}
 stub-zone:
   name: "{{ zone.name }}"
   stub-addr: {{ zone.stub-address }}
 {% endfor %}
 {% endif %}
 
-{% if unbound_forward_zones %}
-{% for zone in unbound_forward_zones  %}
+{% if unbound_forward_zones is defined %}
+{% for zone in unbound_forward_zones %}
 forward-zone:
   name: "{{ zone.name }}"
   forward-first: {{ zone.forward-first }}
-  {% if zone.forward-addresses %}
+  {% if zone.forward-addresses is defined %}
   {% set addresses = zone.forward-addresses.split(',') %}
   {% for address in addresses %}
   forward-addr: {{ address }}

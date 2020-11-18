@@ -1,13 +1,14 @@
 # NSD
-nsd_hide_version: yes
-nsd_hide_identity: yes
+nsd_hide_version: 'yes'
+nsd_hide_identity: 'yes'
 nsd_verbosity: 1
 nsd_statistics: 86400
-nsd_remote_control: yes
+nsd_remote_control: 'yes'
+nsd_port: 5353
 
 # Use predefined key
 nsd_keys:
-  - { name: seckey, algo: hmac-256, secret: supersecret== }
+  - { name: seckey, algo: hmac-sha256, secret: "y6uRlBd1Y68eO9gIOEFGKmI5R1jg8Npq0iLMOSG2ViFQThjXgH0K0s4ffUOZlmMVtBQ+4Cmncasj7QysFhpPxA==" }
 
 # .. Or generate a key
 nsd_make_key: false
@@ -39,20 +40,20 @@ unbound_forward_zones:
 unbound_local_zones:
   - { name:  }
 
-unbound_ipv6: yes
+unbound_ipv6: 'yes'
 unbound_auto_trust_anchor_file: /var/unbound/db/root.key
 unbound_root_hints: /var/unbound/etc/root.hints
-unbound_do_not_query_localhost: no
-unbound_remote_control: yes
+unbound_do_not_query_localhost: 'no'
+unbound_remote_control: 'yes'
 unbound_use_tls: ns2.schmidbauer.cz
 unbound_tls_port: 853
-unbound_hide_identity: yes
-unbound_hide_version: yes
-unbound_harden_glue: yes
-unbound_use_caps_for_id: yes
-unbound_deny_any: yes
-unbound_qname_minimisation: yes
-unbound_harden_dnssec_stripped: yes
-unbound_aggressive_nsec: yes
-unbound_log_queries: no
-unbound_log_replies: no
+unbound_hide_identity: 'yes'
+unbound_hide_version: 'yes'
+unbound_harden_glue: 'yes'
+unbound_use_caps_for_id: 'yes'
+unbound_deny_any: 'yes'
+unbound_qname_minimisation: 'yes'
+unbound_harden_dnssec_stripped: 'yes'
+unbound_aggressive_nsec: 'yes'
+unbound_log_queries: 'no'
+unbound_log_replies: 'no'
