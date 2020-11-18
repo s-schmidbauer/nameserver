@@ -45,11 +45,11 @@
     - name: "unbound - Reload config if it's OK and changed"
       shell: nsd-control reconfig
       register: nsd_reconfig
-      when: nsd_config_check and nsd_config is changed
+      when: (nsd_config_check | bool) and nsd_config is changed
       tags: nsd
 
     - name: "unbound - Reload zones"
       shell: nsd-control reload
       register: nsd_config_reload
-      when: nsd_config_check
+      when: nsd_config_check | bool
       tags: nsd
