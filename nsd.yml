@@ -37,19 +37,27 @@
       register: nsd_control_setup
       tags: nsd
 
-    - name: "unbound - Check config"
+    - name: "nsd - Create zones"
+      template:
+        src: "nsdzone.j2"
+        dest: "/var/nsd/zones/master/{{ item.key }}.zone"
+      with_dict: "{{ nsdzones }}"
+      register: nsd_create_zones
+      tags: nsd
+
+    - name: "nsd - Check config"
       shell: nsd-checkconf /var/nsd/etc/nsd.conf
       register: nsd_config_check
       tags: nsd
 
-    - name: "unbound - Reload config if it's OK and changed"
+    - name: "nsd - Reload config if it's OK and changed"
       shell: nsd-control reconfig
       register: nsd_reconfig
       when: (nsd_config_check | bool) and nsd_config is changed
       tags: nsd
 
-    - name: "unbound - Reload zones"
+    - name: "nsd - Reload zones"
       shell: nsd-control reload
       register: nsd_config_reload
-      when: nsd_config_check | bool
+      when: (nsd_config_check | bool) and nsd_create_zones is changed
       tags: nsd
