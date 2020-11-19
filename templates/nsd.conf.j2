@@ -63,11 +63,11 @@ pattern:
 {% endfor %}
 {% endif %}
 
-{% if nsd_zones is defined %}
-{% for zone in nsd_zones %}
+{% if nsdzones is defined %}
+{% for zone in nsdzones.keys() %}
 zone:
-  name: "{{ zone.name }}"
-  zonefile: "{{ zone.file }}"
+  name: "{{ zone }}"
+  zonefile: "master/{{ zone }}.zone"
   {% if zone.includepattern is defined %}
   include-pattern: "{{ zone.includepattern }}"
   {% endif %}
