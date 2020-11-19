@@ -48,18 +48,18 @@ key:
 {% for pattern in nsd_patterns %}
 pattern:
   name: "{{ pattern.name }}"
-  {% if pattern.notify is defined %}
+{% if pattern.notify is defined %}
   notify: {{ pattern.notify }} {{ pattern.key }}
-  {% endif %}
-  {% if pattern.providexfr is defined  %}
+{% endif %}
+{% if pattern.providexfr is defined  %}
   provide-xfr: AXFR {{ pattern.providexfr }} {{ pattern.key }}
-  {% endif %}
-  {% if pattern.allownotify is defined %}
+{% endif %}
+{% if pattern.allownotify is defined %}
   allow-notify: {{ pattern.allownotify }} {{ pattern.key }}
-  {% endif %}
-  {% if pattern.requestxfr is defined %}
+{% endif %}
+{% if pattern.requestxfr is defined %}
   request-xfr: AXFR {{ pattern.requestxfr }} {{ pattern.key }}
-  {% endif %}
+{% endif %}
 {% endfor %}
 {% endif %}
 
@@ -68,8 +68,8 @@ pattern:
 zone:
   name: "{{ zone }}"
   zonefile: "master/{{ zone }}.zone"
-  {% if zone.includepattern is defined %}
-  include-pattern: "{{ zone.includepattern }}"
-  {% endif %}
+{% if nsd_include_pattern is defined %}
+  include-pattern: "{{ nsd_include_pattern }}"
+{% endif %}
 {% endfor %}
 {% endif %}
