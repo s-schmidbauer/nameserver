@@ -15,8 +15,9 @@ server:
 
   root-hints: "{{ unbound_root_hints }}"
 
-  #Adblocking done with /usr/local/bin/adblocks.sh which creates adblocks.conf
-  #include: "/var/unbound/etc/adblocks.conf"
+{% if unbound_use_adblocks is defined %}
+  include: "/var/unbound/etc/adblocks.conf"
+{% endif %}
 
   #TLS (DoT)
 {% if nsd_use_tls is defined %}

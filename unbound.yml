@@ -22,6 +22,23 @@
         dest: "{{ unbound_root_hints }}"
       tags: unbound
 
+    - name: "unbound - Copy AdBlocks commands"
+      copy:
+        src: "files/{{ item }}"
+        dest: "/usr/local/bin/{{ item }}"
+        mode: 0750
+      with_items:
+        - adblocks.sh
+        - adblocks_make.sh
+      when: unbound_use_adblocks | bool
+      tags: unbound
+
+    - name: "unbound - Get AdBlocks"
+      command: /usr/local/bin/adblocks_make.sh
+      when: unbound_use_adblocks | bool
+      become_user: root
+      tags: unbound
+
     - name: "unbound - Configure /var/unbound/etc/unbound.conf"
       template:
         src: "unbound.conf.j2"

@@ -96,3 +96,4 @@ unbound_harden_dnssec_stripped: 'yes'
 unbound_aggressive_nsec: 'yes'
 unbound_log_queries: 'no'
 unbound_log_replies: 'no'
+unbound_use_adblocks: true
