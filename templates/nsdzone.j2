@@ -1,19 +1,15 @@
-{% for zone in nsdzones.keys() %}
 ; START OF ZONE
-$ORIGIN {{ zone }}.                          ; default zone domain
-$TTL {{ nsdzones[zone].ttl }}                ; default time to live
-
-@ IN SOA {{ nsdzones[zone].soa }}. (
-           {{ nsdzones[zone].serial }}       ; serial number
-           {{ nsdzones[zone].refresh }}      ; Refresh
-           {{ nsdzones[zone].retry }}        ; Retry
-           {{ nsdzones[zone].expire }}       ; Expire
-           {{ nsdzones[zone].min_ttl }}      ; Min TTL
+$ORIGIN {{ item.key }}.                          ; default zone domain
+$TTL {{ item.value.ttl }}                ; default time to live
+@ IN SOA {{ item.value.soa }}. (
+           {{ item.value.serial }}       ; serial number
+           {{ item.value.refresh }}      ; Refresh
+           {{ item.value.retry }}        ; Retry
+           {{ item.value.expire }}       ; Expire
+           {{ item.value.min_ttl }}      ; Min TTL
            )
-
-{% for record in nsdzones[zone].records %}
+{% for record in item.value.records %}
 {% if record.name is defined %}{{ record.name }}{% else %}     {% endif %}     {% if record.type is defined %}{{ record.type }}     {% endif %}{% if record.value is defined %}{{ record.value }}{% endif %}
 
 {% endfor %}
 ; END OF ZONE
-{% endfor %}
