@@ -121,7 +121,7 @@ unbound_auto_trust_anchor_file: /var/unbound/db/root.key
 unbound_root_hints: /var/unbound/etc/root.hints
 unbound_do_not_query_localhost: 'no'
 unbound_remote_control: 'yes'
-unbound_use_tls: ns2.schmidbauer.cz
+# unbound_use_tls: ns.schmidbauer.cz
 unbound_tls_port: 853
 unbound_hide_identity: 'yes'
 unbound_hide_version: 'yes'

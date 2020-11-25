@@ -45,6 +45,12 @@
       register: nsd_create_zones
       tags: nsd
 
+    - name: "nsd - Check zones"
+      shell: nsd-checkzone {{ item.key }} /var/nsd/zones/master/{{ item.key }}.zone
+      register: nsd_check_zones
+      with_dict: "{{ nsdzones }}"
+      tags: nsd
+
     - name: "nsd - Check config"
       shell: nsd-checkconf /var/nsd/etc/nsd.conf
       register: nsd_config_check
