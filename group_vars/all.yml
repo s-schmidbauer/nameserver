@@ -24,7 +24,7 @@ nsd_slaves:
 nsdzones:
   schmidbauer.cz:
     soa: ns.schmidbauer.cz. admin.schmidbauer.cz.
-    serial: 2011010242
+    serial: 2011010243
     refresh: 28800
     retry: 7200
     expire: 1209600
@@ -35,9 +35,9 @@ nsdzones:
       - { type: 'NS',             value: 'ns2' }
       - { type: 'MX',             value: '10 mail.schmidbauer.cz.' }
       - { type: 'MX',             value: '20 mail2.schmidbauer.cz.' }
-      - { type: 'TXT',            value: "v=spf1 mx:schmidbauer.cz -all" }
-      - { type: 'CAA',            value: "128 issue 'letsencrypt.org'" }
-      - { type: 'CAA',            value: "128 issuewild ';'" }
+      - { type: 'TXT',            value: '"v=spf1 mx:schmidbauer.cz -all"' }
+      - { type: 'CAA',            value: '"128 issue 'letsencrypt.org'"' }
+      - { type: 'CAA',            value: '"128 issuewild ';'"' }
       - { name: 'files',          type: 'A',    value: "193.235.207.56" }
       - { name: 'files',          type: 'AAAA', value: "2a03:f80:420:193:235:207:56:1" }
       - { name: 'mon',            type: 'A',    value: "193.235.207.56" }
@@ -60,8 +60,8 @@ nsdzones:
       - { name: 'webmail',        type: 'AAAA', value: "2a03:f80:420:193:235:207:56:1" }
       - { name: '*',              type: 'A',    value: "193.235.207.51" }
       - { name: '*',              type: 'AAAA', value: "2a03:f80:420:193:235:207:51:1" }
-      - { name: '_dmarc',         type: 'TXT',  value: "v=DMARC1;p=quarantine;pct=100;rua=mailto:postmaster@schmidbauer.cz;" }
-      - { name: '20201114._domainkey',    type: 'TXT',    value: "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDHMZuvph/1d1JvPdsXhCbR83tk0VBc5lh0/nJk5mfySSb3Jtol6TlTLhfN3xamalsCIEBVXIj/N/B5HSVGMFNCEu2nAvkw353o2jBuav3zIk3BHg2xu5dfhBcufLTUDgr84vz+1ijOU2a+N/50NCraeCq5CM0SZNdwY/nRnUKlvQIDAQAB;" }
+      - { name: '_dmarc',         type: 'TXT',  value: '"v=DMARC1;p=quarantine;pct=100;rua=mailto:postmaster@schmidbauer.cz;"' }
+      - { name: '20201114._domainkey',    type: 'TXT',    value: '"v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDHMZuvph/1d1JvPdsXhCbR83tk0VBc5lh0/nJk5mfySSb3Jtol6TlTLhfN3xamalsCIEBVXIj/N/B5HSVGMFNCEu2nAvkw353o2jBuav3zIk3BHg2xu5dfhBcufLTUDgr84vz+1ijOU2a+N/50NCraeCq5CM0SZNdwY/nRnUKlvQIDAQAB;"' }
 
       - { name: 'tlsa._dane.mail', type: 'TLSA', value: "3 1 1 d937fca6d98bcb97bf91b0cef59a068646c1f557e0edf628576692cc946ab621" }
       - { name: '_143._tcp.mail',  type: 'CNAME',value: "tlsa._dane.mail.schmidbauer.cz." }
