@@ -99,18 +99,12 @@ nsdzones:
       - { name: 'www2.schmidbauer.cz',      type: 'SSHFP',  value: "4 1 9375f9ec283374bfc75397376681dc4ebd0a72b0" }
       - { name: 'www2.schmidbauer.cz',      type: 'SSHFP',  value: "4 2 7afb602481b0a438058131499f7f607962bce6540fd458bd1dffce9e7138a7ce" }
 
-# Unbound
-unbound_interfaces:
-  - 0.0.0.0@5353
-  - 0.0.0.0@853
-  - ::0@853
-
 unbound_acl:
   - 0.0.0.0/0 allow
   - ::0/0 allow
 
 unbound_stub_zones:
-  - { name: "schmidbauer.cz", stub_address: '127.0.0.1@5353' }  # Pass to NSD
+  - { name: "schmidbauer.cz", stub_address: '127.0.0.1@53' }  # Pass to NSD
 
 unbound_forward_zones:
   - { name: ".", forward_first: "yes", forward_addresses: "1.1.1.1,9.9.9.9" }

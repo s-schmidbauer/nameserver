@@ -14,3 +14,6 @@ nsd_patterns:
 
 # Unbound
 unbound_use_tls: ns.schmidbauer.cz
+
+unbound_interfaces:
+  - 2a03:f80:420:193:235:207:51:2
