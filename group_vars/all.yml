@@ -59,43 +59,43 @@ nsdzones:
       - { name: '*',              type: 'A',    value: "193.235.207.51" }
       - { name: '*',              type: 'AAAA', value: "2a03:f80:420:193:235:207:51:1" }
       - { name: '_dmarc',         type: 'TXT',  value: "'v=DMARC1;p=quarantine;pct=100;rua=mailto:postmaster@schmidbauer.cz;'" }
-      - { name: '20201114._domainkey',    type: 'TXT',    value: "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDHMZuvph/1d1JvPdsXhCbR83tk0VBc5lh0/nJk5mfySSb3Jtol6TlTLhfN3xamalsCIEBVXIj/N/B5HSVGMFNCEu2nAvkw353o2jBuav3zIk3BHg2xu5dfhBcufLTUDgr84vz+1ijOU2a+N/50NCraeCq5CM0SZNdwY/nRnUKlvQIDAQAB;"
+      - { name: '20201114._domainkey',    type: 'TXT',    value: "'v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDHMZuvph/1d1JvPdsXhCbR83tk0VBc5lh0/nJk5mfySSb3Jtol6TlTLhfN3xamalsCIEBVXIj/N/B5HSVGMFNCEu2nAvkw353o2jBuav3zIk3BHg2xu5dfhBcufLTUDgr84vz+1ijOU2a+N/50NCraeCq5CM0SZNdwY/nRnUKlvQIDAQAB;'" }
 
-      - { name: tlsa._dane.mail', type: 'TLSA', value: "3 1 1 d937fca6d98bcb97bf91b0cef59a068646c1f557e0edf628576692cc946ab621" }
-      - { name: _143._tcp.mail',  type: 'CNAME',value: "tlsa._dane.mail.schmidbauer.cz."
-      - { name: _25._tcp.mail',   type: 'CNAME',value: "tlsa._dane.mail.schmidbauer.cz."
-      - { name: _443._tcp.mail',  type: 'CNAME',value: "tlsa._dane.mail.schmidbauer.cz."
-      - { name: _465._tcp.mail',  type: 'CNAME',value: "tlsa._dane.mail.schmidbauer.cz."
-      - { name: _587._tcp.mail',  type: 'CNAME',value: "tlsa._dane.mail.schmidbauer.cz."
-      - { name: _993._tcp.mail',  type: 'CNAME',value: "tlsa._dane.mail.schmidbauer.cz."
-      - { name: tlsa._dane.mail2', type: 'TLSA', value: "3 1 1 92c738b3168765bba09151bacce53f1fbc335ed240c5460459c211528fe82af5" }
-      - { name: _143._tcp.mail2',  type: 'CNAME',value: "tlsa._dane.mail2.schmidbauer.cz."
-      - { name: _25._tcp.mail2',   type: 'CNAME',value: "tlsa._dane.mail2.schmidbauer.cz."
-      - { name: _443._tcp.mail2',  type: 'CNAME',value: "tlsa._dane.mail2.schmidbauer.cz."
-      - { name: _465._tcp.mail2',  type: 'CNAME',value: "tlsa._dane.mail2.schmidbauer.cz."
-      - { name: _587._tcp.mail2',  type: 'CNAME',value: "tlsa._dane.mail2.schmidbauer.cz."
-      - { name: _993._tcp.mail2',  type: 'CNAME',value: "tlsa._dane.mail2.schmidbauer.cz."
+      - { name: 'tlsa._dane.mail', type: 'TLSA', value: "3 1 1 d937fca6d98bcb97bf91b0cef59a068646c1f557e0edf628576692cc946ab621" }
+      - { name: '_143._tcp.mail',  type: 'CNAME',value: "tlsa._dane.mail.schmidbauer.cz." }
+      - { name: '_25._tcp.mail',   type: 'CNAME',value: "tlsa._dane.mail.schmidbauer.cz." }
+      - { name: '_443._tcp.mail',  type: 'CNAME',value: "tlsa._dane.mail.schmidbauer.cz." }
+      - { name: '_465._tcp.mail',  type: 'CNAME',value: "tlsa._dane.mail.schmidbauer.cz." }
+      - { name: '_587._tcp.mail',  type: 'CNAME',value: "tlsa._dane.mail.schmidbauer.cz." }
+      - { name: '_993._tcp.mail',  type: 'CNAME',value: "tlsa._dane.mail.schmidbauer.cz." }
+      - { name: 'tlsa._dane.mail2', type: 'TLSA', value: "3 1 1 92c738b3168765bba09151bacce53f1fbc335ed240c5460459c211528fe82af5" }
+      - { name: '_143._tcp.mail2',  type: 'CNAME',value: "tlsa._dane.mail2.schmidbauer.cz." }
+      - { name: '_25._tcp.mail2',   type: 'CNAME',value: "tlsa._dane.mail2.schmidbauer.cz." }
+      - { name: '_443._tcp.mail2',  type: 'CNAME',value: "tlsa._dane.mail2.schmidbauer.cz." }
+      - { name: '_465._tcp.mail2',  type: 'CNAME',value: "tlsa._dane.mail2.schmidbauer.cz." }
+      - { name: '_587._tcp.mail2',  type: 'CNAME',value: "tlsa._dane.mail2.schmidbauer.cz." }
+      - { name: '_993._tcp.mail2',  type: 'CNAME',value: "tlsa._dane.mail2.schmidbauer.cz." }
 
-      - { name: files.schmidbauer.cz,     type: 'SSHFP',  value: "4 1 6845f54633d096586cd7bdcad19ec20cc21e6cda" }
-      - { name: files.schmidbauer.cz,     type: 'SSHFP',  value: "4 2 356ffb4137a05255837851005da41689bf5163639887fde7051bfd23a7cbf4a3" }
-      - { name: mail.schmidbauer.cz,      type: 'SSHFP',  value: "4 1 a7c320684510be4c09f16278c0622188004c6bc7" }
-      - { name: mail.schmidbauer.cz,      type: 'SSHFP',  value: "4 2 d12d63813a4ab592808ac4311a7d4afaca8250e45ef0b300821740b5d34e4d52" }
-      - { name: man.schmidbauer.cz,       type: 'SSHFP',  value: "4 1 6845f54633d096586cd7bdcad19ec20cc21e6cda" }
-      - { name: man.schmidbauer.cz,       type: 'SSHFP',  value: "4 2 356ffb4137a05255837851005da41689bf5163639887fde7051bfd23a7cbf4a3" }
-      - { name: mon.schmidbauer.cz,       type: 'SSHFP',  value: "4 1 6845f54633d096586cd7bdcad19ec20cc21e6cda" }
-      - { name: mon.schmidbauer.cz,       type: 'SSHFP',  value: "4 2 356ffb4137a05255837851005da41689bf5163639887fde7051bfd23a7cbf4a3" }
-      - { name: ns.schmidbauer.cz,        type: 'SSHFP',  value: "4 1 a7c320684510be4c09f16278c0622188004c6bc7" }
-      - { name: ns.schmidbauer.cz,        type: 'SSHFP',  value: "4 2 d12d63813a4ab592808ac4311a7d4afaca8250e45ef0b300821740b5d34e4d52" }
-      - { name: vpn.schmidbauer.cz,       type: 'SSHFP',  value: "4 1 6845f54633d096586cd7bdcad19ec20cc21e6cda" }
-      - { name: vpn.schmidbauer.cz,       type: 'SSHFP',  value: "4 2 356ffb4137a05255837851005da41689bf5163639887fde7051bfd23a7cbf4a3" }
-      - { name: www.schmidbauer.cz,       type: 'SSHFP',  value: "4 1 a7c320684510be4c09f16278c0622188004c6bc7" }
-      - { name: www.schmidbauer.cz,       type: 'SSHFP',  value: "4 2 d12d63813a4ab592808ac4311a7d4afaca8250e45ef0b300821740b5d34e4d52" }
-      - { name: webmail.schmidbauer.cz,   type: 'SSHFP',  value: "4 1 a7c320684510be4c09f16278c0622188004c6bc7" }
-      - { name: webmail.schmidbauer.cz,   type: 'SSHFP',  value: "4 2 d12d63813a4ab592808ac4311a7d4afaca8250e45ef0b300821740b5d34e4d52" }
-      - { name: mail2.schmidbauer.cz,     type: 'SSHFP',  value: "4 1 9375f9ec283374bfc75397376681dc4ebd0a72b0" }
-      - { name: mail2.schmidbauer.cz,     type: 'SSHFP',  value: "4 2 7afb602481b0a438058131499f7f607962bce6540fd458bd1dffce9e7138a7ce" }
-      - { name: www2.schmidbauer.cz,      type: 'SSHFP',  value: "4 1 9375f9ec283374bfc75397376681dc4ebd0a72b0
-      - { name: www2.schmidbauer.cz,      type: 'SSHFP',  value: "4 2 7afb602481b0a438058131499f7f607962bce6540fd458bd1dffce9e7138a7ce" }
+      - { name: 'files.schmidbauer.cz',     type: 'SSHFP',  value: "4 1 6845f54633d096586cd7bdcad19ec20cc21e6cda" }
+      - { name: 'files.schmidbauer.cz',     type: 'SSHFP',  value: "4 2 356ffb4137a05255837851005da41689bf5163639887fde7051bfd23a7cbf4a3" }
+      - { name: 'mail.schmidbauer.cz',      type: 'SSHFP',  value: "4 1 a7c320684510be4c09f16278c0622188004c6bc7" }
+      - { name: 'mail.schmidbauer.cz',      type: 'SSHFP',  value: "4 2 d12d63813a4ab592808ac4311a7d4afaca8250e45ef0b300821740b5d34e4d52" }
+      - { name: 'man.schmidbauer.cz',       type: 'SSHFP',  value: "4 1 6845f54633d096586cd7bdcad19ec20cc21e6cda" }
+      - { name: 'man.schmidbauer.cz',       type: 'SSHFP',  value: "4 2 356ffb4137a05255837851005da41689bf5163639887fde7051bfd23a7cbf4a3" }
+      - { name: 'mon.schmidbauer.cz',       type: 'SSHFP',  value: "4 1 6845f54633d096586cd7bdcad19ec20cc21e6cda" }
+      - { name: 'mon.schmidbauer.cz',       type: 'SSHFP',  value: "4 2 356ffb4137a05255837851005da41689bf5163639887fde7051bfd23a7cbf4a3" }
+      - { name: 'ns.schmidbauer.cz',        type: 'SSHFP',  value: "4 1 a7c320684510be4c09f16278c0622188004c6bc7" }
+      - { name: 'ns.schmidbauer.cz',        type: 'SSHFP',  value: "4 2 d12d63813a4ab592808ac4311a7d4afaca8250e45ef0b300821740b5d34e4d52" }
+      - { name: 'vpn.schmidbauer.cz',       type: 'SSHFP',  value: "4 1 6845f54633d096586cd7bdcad19ec20cc21e6cda" }
+      - { name: 'vpn.schmidbauer.cz',       type: 'SSHFP',  value: "4 2 356ffb4137a05255837851005da41689bf5163639887fde7051bfd23a7cbf4a3" }
+      - { name: 'www.schmidbauer.cz',       type: 'SSHFP',  value: "4 1 a7c320684510be4c09f16278c0622188004c6bc7" }
+      - { name: 'www.schmidbauer.cz',       type: 'SSHFP',  value: "4 2 d12d63813a4ab592808ac4311a7d4afaca8250e45ef0b300821740b5d34e4d52" }
+      - { name: 'webmail.schmidbauer.cz',   type: 'SSHFP',  value: "4 1 a7c320684510be4c09f16278c0622188004c6bc7" }
+      - { name: 'webmail.schmidbauer.cz',   type: 'SSHFP',  value: "4 2 d12d63813a4ab592808ac4311a7d4afaca8250e45ef0b300821740b5d34e4d52" }
+      - { name: 'mail2.schmidbauer.cz',     type: 'SSHFP',  value: "4 1 9375f9ec283374bfc75397376681dc4ebd0a72b0" }
+      - { name: 'mail2.schmidbauer.cz',     type: 'SSHFP',  value: "4 2 7afb602481b0a438058131499f7f607962bce6540fd458bd1dffce9e7138a7ce" }
+      - { name: 'www2.schmidbauer.cz',      type: 'SSHFP',  value: "4 1 9375f9ec283374bfc75397376681dc4ebd0a72b0" }
+      - { name: 'www2.schmidbauer.cz',      type: 'SSHFP',  value: "4 2 7afb602481b0a438058131499f7f607962bce6540fd458bd1dffce9e7138a7ce" }
 
 # Unbound
 unbound_interfaces:
