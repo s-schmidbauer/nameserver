@@ -23,8 +23,8 @@ nsd_slaves:
 
 nsdzones:
   schmidbauer.cz:
-    soa: ns.schmidbauer.cz admin.schmidbauer.cz
-    serial: 2011010239
+    soa: ns.schmidbauer.cz. admin.schmidbauer.cz.
+    serial: 2011010240
     refresh: 28800
     retry: 7200
     expire: 1209600

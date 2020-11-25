@@ -56,14 +56,12 @@
       register: nsd_config_check
       tags: nsd
 
-    - name: "nsd - Reload config if it's OK and changed"
+    - name: "nsd - Reload config"
       shell: nsd-control reconfig
       register: nsd_reconfig
-      when: (nsd_config_check | bool) and nsd_config is changed
       tags: nsd
 
     - name: "nsd - Reload zones"
       shell: nsd-control reload
       register: nsd_config_reload
-      when: (nsd_config_check | bool) and nsd_create_zones is changed
       tags: nsd

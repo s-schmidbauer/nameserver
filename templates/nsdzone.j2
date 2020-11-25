@@ -1,7 +1,6 @@
-; START OF ZONE
-$ORIGIN {{ item.key }}.                          ; default zone domain
+$ORIGIN {{ item.key }}.                  ; default zone domain
 $TTL {{ item.value.ttl }}                ; default time to live
-@ IN SOA {{ item.value.soa }}. (
+@ IN SOA {{ item.value.soa }} (
            {{ item.value.serial }}       ; serial number
            {{ item.value.refresh }}      ; Refresh
            {{ item.value.retry }}        ; Retry
@@ -12,4 +11,3 @@ $TTL {{ item.value.ttl }}                ; default time to live
 {% if record.name is defined %}{{ record.name }}{% else %}     {% endif %}     {% if record.type is defined %}{{ record.type }}     {% endif %}{% if record.value is defined %}{{ record.value }}{% endif %}
 
 {% endfor %}
-; END OF ZONE
