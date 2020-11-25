@@ -52,7 +52,7 @@ pattern:
   notify: {{ pattern.notify }} {{ pattern.key }}
 {% endif %}
 {% if pattern.providexfr is defined  %}
-  provide-xfr: AXFR {{ pattern.providexfr }} {{ pattern.key }}
+  provide-xfr: {{ pattern.providexfr }} {{ pattern.key }}
 {% endif %}
 {% if pattern.allownotify is defined %}
   allow-notify: {{ pattern.allownotify }} {{ pattern.key }}
