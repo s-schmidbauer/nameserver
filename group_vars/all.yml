@@ -4,7 +4,7 @@ nsd_hide_identity: 'yes'
 nsd_verbosity: 1
 nsd_statistics: 86400
 nsd_remote_control: 'yes'
-nsd_port: 5353
+nsd_port: 53
 
 # Use predefined key
 nsd_keys:
@@ -24,17 +24,17 @@ nsd_slaves:
 nsdzones:
   schmidbauer.cz:
     soa: ns.schmidbauer.cz admin.schmidbauer.cz
-    serial: 2011010232
+    serial: 2011010239
     refresh: 28800
     retry: 7200
-    expire: 864000
+    expire: 1209600
     ttl: 86400
     min_ttl: 86400
     records:
-      - { name: 'schmidbauer.cz', type: 'NS',  value: 'ns.schmidbauer.cz.' }
-      - { name: 'schmidbauer.cz', type: 'NS',  value: 'ns2.schmidbauer.cz.' }
-      - { name: 'schmidbauer.cz', type: 'MX',  value: '10 mail.schmidbauer.cz.' }
-      - { name: 'schmidbauer.cz', type: 'MX',  value: '20 mail2.schmidbauer.cz.' }
+      - { type: 'NS',  value: 'ns' }
+      - { type: 'NS',  value: 'ns2' }
+      - { type: 'MX',  value: '10 mail.schmidbauer.cz.' }
+      - { type: 'MX',  value: '20 mail2.schmidbauer.cz.' }
       - { type: 'TXT',                          value: '"v=spf1 mx:schmidbauer.cz -all"' }
       - { name: 'schmidbauer.cz', type: 'CAA',  value: "128 issue 'letsencrypt.org'" }
       - { name: 'schmidbauer.cz', type: 'CAA',  value: "128 issuewild ';'" }
@@ -101,7 +101,7 @@ nsdzones:
 
 # Unbound
 unbound_interfaces:
-  - 0.0.0.0
+  - 0.0.0.0@5353
   - 0.0.0.0@853
   - ::0@853
 
