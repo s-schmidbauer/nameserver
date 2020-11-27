@@ -15,12 +15,6 @@ nsd_make_key: false
 nsd_key_name: seckey
 nsd_key_algo: hmac-sha256     # Currently hardcoded in dd command
 
-nsd_masters:
-  - { ip: "193.235.207.51@5353", key: "seckey" }
-
-nsd_slaves:
-  - { ip: "151.236.30.179@5353", key: "seckey" }
-
 nsdzones:
   schmidbauer.cz:
     #dnssec
