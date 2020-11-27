@@ -69,7 +69,13 @@
       with_dict: "{{ nsdzones }}"
       # when: nsd_dnssec_sign_zone == true
       when: "{{ item.nsd_dnssec_sign_zone == true }}"
+      ignore_errors: true
       tags: nsd
+
+    - debug: msg="{{ nsdzones.stdout }}"
+
+    - debug: msg="{{ nsdzones.stderr }}"
+
 
     - name: "nsd - Check config"
       shell: nsd-checkconf /var/nsd/etc/nsd.conf
