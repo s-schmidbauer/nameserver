@@ -67,7 +67,11 @@ pattern:
 {% for zone in nsdzones.keys() %}
 zone:
   name: "{{ zone }}"
+  {% if zone.nsd_dnssec_sign_zone is sameas true %}
+  zonefile: "master/{{ zone }}.zone.signed"
+  {% else %}
   zonefile: "master/{{ zone }}.zone"
+  {% endif %}
 {% if nsd_include_pattern is defined %}
   include-pattern: "{{ nsd_include_pattern }}"
 {% endif %}
