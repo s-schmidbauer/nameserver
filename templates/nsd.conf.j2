@@ -53,7 +53,7 @@ pattern:
 {% endif %}
 {% if pattern.providexfr is defined  %}
   provide-xfr: {{ pattern.providexfr }} {{ pattern.key }}
-  outgoing-interface: {{ nsd_slave_ipv4 }}
+  outgoing-interface: {{ nsd_master_ipv4 }}
 {% endif %}
 {% if pattern.allownotify is defined %}
   allow-notify: {{ pattern.allownotify }} {{ pattern.key }}
