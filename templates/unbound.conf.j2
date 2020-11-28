@@ -16,7 +16,9 @@ server:
   root-hints: "{{ unbound_root_hints }}"
 
 {% if unbound_use_adblocks is defined %}
+{% if unbound_use_adblocks is sameas true %}
   include: "/var/unbound/etc/adblocks.conf"
+{% endif %}
 {% endif %}
 
   #TLS (DoT)
