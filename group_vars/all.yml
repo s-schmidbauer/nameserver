@@ -5,6 +5,8 @@ nsd_verbosity: 1
 nsd_statistics: 86400
 nsd_remote_control: 'yes'
 nsd_port: 53
+nsd_master_ipv4: 193.235.207.51
+nsd_slave_ipv4: 151.236.30.179
 
 # Use predefined key
 nsd_keys:
@@ -13,9 +15,9 @@ nsd_keys:
 # .. Or generate a key
 nsd_make_key: false
 nsd_key_name: seckey
-nsd_key_algo: hmac-sha256     # Currently hardcoded in dd command
+nsd_key_algo: hmac-sha256            # Currently hardcoded in dd command
 
-nsd_dnssec_sign_zones: false   # Used to (re)sign zones using ldns-utils.
+nsd_dnssec_sign_zones: false         # Used to (re)sign zones using ldns-utils.
 
 nsdzones:
   schmidbauer.cz:
@@ -132,4 +134,4 @@ unbound_harden_dnssec_stripped: 'yes'
 unbound_aggressive_nsec: 'yes'
 unbound_log_queries: 'no'
 unbound_log_replies: 'no'
-unbound_use_adblocks: true
+unbound_use_adblocks: false
