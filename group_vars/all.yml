@@ -39,8 +39,8 @@ nsdzones:
       - { type: 'MX',             value: '10 mail.schmidbauer.cz.' }
       - { type: 'MX',             value: '20 mail2.schmidbauer.cz.' }
       - { type: 'TXT',            value: '"v=spf1 mx:schmidbauer.cz -all"' }
-      # - { type: 'CAA',            value: "128 issue 'letsencrypt.org'" }
-      # - { type: 'CAA',            value: "128 issuewild ';'" }
+      - { type: 'CAA',            value: '128 issue "letsencrypt.org"' }        # value needs double quotes!
+      - { type: 'CAA',            value: '128 issuewild ";"' }                  # value needs double quotes!
       - { name: 'files',          type: 'A',    value: "193.235.207.56" }
       - { name: 'files',          type: 'AAAA', value: "2a03:f80:420:193:235:207:56:1" }
       - { name: 'mon',            type: 'A',    value: "193.235.207.56" }
