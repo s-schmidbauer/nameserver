@@ -84,10 +84,10 @@ nsdzones:
       - { name: '_993._tcp.mail2',  type: 'CNAME',value: "tlsa._dane.mail2.schmidbauer.cz." }
 
       - { name: 'autoconfig.schmidbauer.cz',    type: 'CNAME',value: "mail.schmidbauer.cz" }
-      - { name: '_submission._tcp.example.com', type: 'SRV',  value: "0 1 465 mail.schmidbauer.cz" }
-      - { name: '_submission._tcp.example.com', type: 'SRV',  value: "5 1 587	mail.schmidbauer.cz" }
-      - { name: '_imaps._tcp.example.com',      type: 'SRV',  value: "0 1 993	mail.schmidbauer.cz" }
-      - { name: '_imap._tcp.example.com',       type: 'SRV',  value: "0 1 143 mail.schmidbauer.cz" }
+      - { name: '_submission._tcp.schmidbauer.cz', type: 'SRV',  value: "0 1 465 mail.schmidbauer.cz" }
+      - { name: '_submission._tcp.schmidbauer.cz', type: 'SRV',  value: "5 1 587	mail.schmidbauer.cz" }
+      - { name: '_imaps._tcp.schmidbauer.cz',      type: 'SRV',  value: "0 1 993	mail.schmidbauer.cz" }
+      - { name: '_imap._tcp.schmidbauer.cz',       type: 'SRV',  value: "0 1 143 mail.schmidbauer.cz" }
 
       - { name: 'files.schmidbauer.cz',     type: 'SSHFP',  value: "4 1 6845f54633d096586cd7bdcad19ec20cc21e6cda" }
       - { name: 'files.schmidbauer.cz',     type: 'SSHFP',  value: "4 2 356ffb4137a05255837851005da41689bf5163639887fde7051bfd23a7cbf4a3" }
