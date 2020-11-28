@@ -75,6 +75,13 @@
       register: nsd_config_check
       tags: nsd
 
+    - name: "nsd - Ensure started and enabled"
+      service:
+        name: nsd
+        state: started
+        enabled: yes
+      tags: nsd
+
     - name: "nsd - Reload config"
       shell: nsd-control reconfig
       register: nsd_reconfig
