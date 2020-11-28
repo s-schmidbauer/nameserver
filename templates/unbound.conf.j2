@@ -20,10 +20,10 @@ server:
 {% endif %}
 
   #TLS (DoT)
-{% if nsd_use_tls is defined %}
+{% if unbound_use_tls is defined %}
   tls-service-key: "/etc/ssl/private/{{ unbound_use_tls }}.key"
   tls-service-pem: "/etc/ssl/{{ unbound_use_tls }}.fullchain.pem"
-{% if nsd_use_tls is defined %}
+{% if unbound_use_tls is defined %}
   tls-port: {{ unbound_tls_port }}
 {% endif %}
 {% endif %}
