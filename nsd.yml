@@ -68,14 +68,7 @@
       register: nsd_sign_zones
       when: "{{ nsd_dnssec_sign_zones }} == true"
       with_dict: "{{ nsdzones }}"
-
-      ignore_errors: true
       tags: nsd
-
-    - debug: msg="{{ nsdzones.stdout }}"
-
-    - debug: msg="{{ nsdzones.stderr }}"
-
 
     - name: "nsd - Check config"
       shell: nsd-checkconf /var/nsd/etc/nsd.conf
