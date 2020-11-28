@@ -15,7 +15,7 @@ nsd_make_key: false
 nsd_key_name: seckey
 nsd_key_algo: hmac-sha256     # Currently hardcoded in dd command
 
-nsd_dnssec_sign_zones: true   # Used to (re)sign zones using ldns-utils.
+nsd_dnssec_sign_zones: false   # Used to (re)sign zones using ldns-utils.
 
 nsdzones:
   schmidbauer.cz:
