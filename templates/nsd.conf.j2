@@ -53,6 +53,7 @@ pattern:
 {% endif %}
 {% if pattern.providexfr is defined  %}
   provide-xfr: {{ pattern.providexfr }} {{ pattern.key }}
+  outgoing-interface: {{ nsd_slave_ipv4 }}
 {% endif %}
 {% if pattern.allownotify is defined %}
   allow-notify: {{ pattern.allownotify }} {{ pattern.key }}
@@ -67,7 +68,7 @@ pattern:
 {% for zone in nsdzones.keys() %}
 zone:
   name: "{{ zone }}"
-  {% if zone.nsd_dnssec_signed_zone is sameas true %}
+  {% if zone.value.nsd_dnssec_signed_zone is sameas true %}
   zonefile: "master/{{ zone }}.zone.signed"
   {% else %}
   zonefile: "master/{{ zone }}.zone"
