@@ -11,7 +11,7 @@
         name: ldns-utils
         state: present
       tags: nsd
-      when: nsd_dnssec_sign_zone == true
+      when: nsd_dnssec_sign_zones == true
 
     - name: "nsd - Generate secret"
       shell: dd if=/dev/urandom of=/dev/stdout status=none count=1 bs=64 | openssl base64 | tr -d '\n'
@@ -66,9 +66,9 @@
       args:
         chdir: /var/nsd/zones
       register: nsd_sign_zones
+      when: "{{ nsd_dnssec_sign_zones }} == true"
       with_dict: "{{ nsdzones }}"
-      # when: nsd_dnssec_sign_zone == true
-      when: "{{ item.nsd_dnssec_sign_zone == true }}"
+
       ignore_errors: true
       tags: nsd
 
