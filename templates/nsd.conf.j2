@@ -67,7 +67,7 @@ pattern:
 {% for zone in nsdzones.keys() %}
 zone:
   name: "{{ zone }}"
-  {% if zone.nsd_dnssec_sign_zone is sameas true %}
+  {% if zone.nsd_dnssec_signed_zone is sameas true %}
   zonefile: "master/{{ zone }}.zone.signed"
   {% else %}
   zonefile: "master/{{ zone }}.zone"

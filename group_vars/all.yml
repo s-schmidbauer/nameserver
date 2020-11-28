@@ -15,10 +15,12 @@ nsd_make_key: false
 nsd_key_name: seckey
 nsd_key_algo: hmac-sha256     # Currently hardcoded in dd command
 
+nsd_dnssec_sign_zones: true   # Used to (re)sign zones using ldns-utils.
+
 nsdzones:
   schmidbauer.cz:
     #dnssec
-    nsd_dnssec_sign_zone: true     #uses the file [zone].zone.signed
+    nsd_dnssec_signed_zone: true     # Uses the file [zone].zone.signed. Re(signed) on or not.
     nsd_dnssec_zsk_algo: RSASHA512
     nsd_dnssec_ksk_algo: RSASHA512
     nsd_dnssec_zsk_algo_bits: 2048
@@ -104,14 +106,14 @@ unbound_acl:
   - 0.0.0.0/0 allow
   - ::0/0 allow
 
-unbound_stub_zones:
-  - { name: "schmidbauer.cz", stub_address: '127.0.0.1@53' }  # Pass to NSD
+# unbound_stub_zones:
+#   - { name: "schmidbauer.cz", stub_address: '127.0.0.1@53' }  # Pass to NSD
 
 unbound_forward_zones:
   - { name: ".", forward_first: "yes", forward_addresses: "1.1.1.1,9.9.9.9" }
 
-unbound_local_zones:
-  - { name: "schmidbauer.cz", option: "nodefault" }
+# unbound_local_zones:
+#   - { name: "schmidbauer.cz", option: "nodefault" }
 
 unbound_ipv6: 'yes'
 unbound_auto_trust_anchor_file: /var/unbound/db/root.key
