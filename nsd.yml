@@ -58,6 +58,13 @@
       with_dict: "{{ nsdzones }}"
       tags: nsd
 
+- name: Re-create DNSSEC keys
+  hosts: 193.235.207.51
+  user: puffy
+  become: true
+  become_method: doas
+
+  tasks:
     - name: "nsd - Re-create DNSSEC ZSK"
       command: |
         /usr/local/bin/ldns-keygen -a "{{ item.value.nsd_dnssec_zsk_algo }} -b {{ item.value.nsd_dnssec_zsk_algo_bits }} {{ item.key }}"
@@ -78,18 +85,32 @@
       with_dict: "{{ nsdzones }}"
       tags: nsd
 
-    # - name: "nsd - Sign zones"
-    #   command: |
-    #     ZSK=K{{ item.key }}.{{ item.value.nsd_zsk_id }}
-    #     KSK=K{{ item.key }}.{{ item.value.nsd_ksk_id }}
-    #     /usr/local/bin/ldns-signzone -n -s $(head -n 1000 /dev/urandom | sha256 | cut -b 1-16) master/{{ item.key }}.zone $ZSK $KSK
-    #   args:
-    #     chdir: /var/nsd/zones
-    #   register: nsd_sign_zones
-    #   when: nsd_dnssec_sign_zones|bool == true
-    #   with_dict: "{{ nsdzones }}"
-    #   tags: nsd
+- name: Sign zones
+  hosts: 193.235.207.51
+  user: puffy
+  become: true
+  become_method: doas
 
+  tasks:
+    - name: "nsd - Sign zones"
+      shell: |
+        ZSK=K{{ item.key }}.{{ item.value.nsd_zsk_id }}
+        KSK=K{{ item.key }}.{{ item.value.nsd_ksk_id }}
+        /usr/local/bin/ldns-signzone -n -s $(head -n 1000 /dev/urandom | sha256 | cut -b 1-16) master/{{ item.key }}.zone $ZSK $KSK
+      args:
+        chdir: /var/nsd/zones
+      register: nsd_sign_zones
+      when: nsd_dnssec_sign_zones|bool == true
+      with_dict: "{{ nsdzones }}"
+      tags: nsd
+
+- name: Configure nsd and reload zones
+  hosts: all
+  user: puffy
+  become: true
+  become_method: doas
+
+  tasks:
     - name: "nsd - Check config"
       shell: nsd-checkconf /var/nsd/etc/nsd.conf
       register: nsd_config_check
@@ -110,4 +131,9 @@
     - name: "nsd - Reload zones"
       shell: nsd-control reload
       register: nsd_config_reload
+      tags: nsd
+
+    - name: "nsd - Notify partner"
+      shell: nsd-control notify
+      when: nsd_sign_zones is changed
       tags: nsd
