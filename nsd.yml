@@ -60,35 +60,35 @@
 
     - name: "nsd - Re-create DNSSEC ZSK"
       command: |
-        /usr/local/bin/ldns-keygen -a "{{ item.nsd_dnssec_zsk_algo }} -b {{ item.nsd_dnssec_zsk_algo_bits }} {{ item.key }}"
+        /usr/local/bin/ldns-keygen -a "{{ item.value.nsd_dnssec_zsk_algo }} -b {{ item.value.nsd_dnssec_zsk_algo_bits }} {{ item.key }}"
       args:
         chdir: /var/nsd/zones
       register: nsd_dnssec_zsk
-      when: nsd_dnssec_sign_zones|bool == true or nsd_dnssec_recreate_keys|bool == true
+      when: nsd_dnssec_recreate_keys|bool == true
       with_dict: "{{ nsdzones }}"
       tags: nsd
 
     - name: "nsd - Re-create DNSSEC KSK"
       command: |
-        /usr/local/bin/ldns-keygen -a "{{ item.nsd_dnssec_ksk_algo }} -b {{ item.nsd_dnssec_ksk_algo_bits }} {{ item.key }}"
+        /usr/local/bin/ldns-keygen -a "{{ item.value.nsd_dnssec_ksk_algo }} -b {{ item.value.nsd_dnssec_ksk_algo_bits }} {{ item.key }}"
       args:
         chdir: /var/nsd/zones
       register: nsd_dnssec_ksk
-      when: nsd_dnssec_sign_zones|bool == true or nsd_dnssec_recreate_keys|bool == true
+      when: nsd_dnssec_recreate_keys|bool == true
       with_dict: "{{ nsdzones }}"
       tags: nsd
 
-    - name: "nsd - Sign zones"
-      command: |
-        ZSK=K{{ item.key }}.{{ item.nsd_zsk_id }}
-        KSK=K{{ item.key }}.{{ item.nsd_ksk_id }}
-        /usr/local/bin/ldns-signzone -n -s $(head -n 1000 /dev/urandom | sha256 | cut -b 1-16) master/{{ item.key }}.zone $ZSK $KSK
-      args:
-        chdir: /var/nsd/zones
-      register: nsd_sign_zones
-      when: nsd_dnssec_sign_zones|bool == true and nsd_create_zones is changed
-      with_dict: "{{ nsdzones }}"
-      tags: nsd
+    # - name: "nsd - Sign zones"
+    #   command: |
+    #     ZSK=K{{ item.key }}.{{ item.value.nsd_zsk_id }}
+    #     KSK=K{{ item.key }}.{{ item.value.nsd_ksk_id }}
+    #     /usr/local/bin/ldns-signzone -n -s $(head -n 1000 /dev/urandom | sha256 | cut -b 1-16) master/{{ item.key }}.zone $ZSK $KSK
+    #   args:
+    #     chdir: /var/nsd/zones
+    #   register: nsd_sign_zones
+    #   when: nsd_dnssec_sign_zones|bool == true
+    #   with_dict: "{{ nsdzones }}"
+    #   tags: nsd
 
     - name: "nsd - Check config"
       shell: nsd-checkconf /var/nsd/etc/nsd.conf
