@@ -48,6 +48,13 @@
 
       # Add missing config check
 
+    - name: "unbound - Ensure started and enabled"
+      service:
+        name: unbound
+        state: started
+        enabled: yes
+      tags: nsd
+
     - name: "unbound - Reload config" # Using the big ad blocklist fails unbound-checkconf
       shell: unbound-control reload
       register: unbound_config_check

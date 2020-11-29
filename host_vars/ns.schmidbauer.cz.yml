@@ -10,7 +10,7 @@ nsd_use_tls: ns.schmidbauer.cz
 nsd_include_pattern: replicate_to
 
 nsd_patterns:
-  - { name: "replicate_to", key: "seckey", notify: "151.236.30.179@5353", providexfr: "151.236.30.179@5353" }
+  - { name: "replicate_to", key: "seckey", notify: "{{ nsd_slave_ipv4 }}", providexfr: "{{ nsd_slave_ipv4 }}" }
 
 # Unbound
 unbound_use_tls: ns.schmidbauer.cz

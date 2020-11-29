@@ -5,6 +5,8 @@ nsd_verbosity: 1
 nsd_statistics: 86400
 nsd_remote_control: 'yes'
 nsd_port: 53
+nsd_master_ipv4: 193.235.207.51
+nsd_slave_ipv4: 151.236.30.179
 
 # Use predefined key
 nsd_keys:
@@ -13,18 +15,24 @@ nsd_keys:
 # .. Or generate a key
 nsd_make_key: false
 nsd_key_name: seckey
-nsd_key_algo: hmac-sha256     # Currently hardcoded in dd command
+nsd_key_algo: hmac-sha256            # Currently hardcoded in dd command
 
-nsd_masters:
-  - { ip: "193.235.207.51@5353", key: "seckey" }
-
-nsd_slaves:
-  - { ip: "151.236.30.179@5353", key: "seckey" }
+nsd_dnssec_sign_zones: true          # Used to (re)sign zones using ldns-utils.
+nsd_dnssec_recreate_keys: false      # Create new KSK and ZSK
 
 nsdzones:
   schmidbauer.cz:
+    #dnssec
+    nsd_dnssec_signed_zone: true     # Uses the file [zone].zone.signed. Re(signed) on or not.
+    nsd_ksk_id: +010+29270           # Current ID, Looks for file in /var/nsd/zones
+    nsd_zsk_id: +010+06146           # Current ID, Looks for file in /var/nsd/zones
+    nsd_dnssec_zsk_algo: RSASHA512
+    nsd_dnssec_ksk_algo: RSASHA512
+    nsd_dnssec_zsk_algo_bits: 2048
+    nsd_dnssec_ksk_algo_bits: 4096
+    #zone
     soa: ns.schmidbauer.cz. admin.schmidbauer.cz.
-    serial: 2011010243
+    serial: 2011010245
     refresh: 28800
     retry: 7200
     expire: 1209600
@@ -36,8 +44,8 @@ nsdzones:
       - { type: 'MX',             value: '10 mail.schmidbauer.cz.' }
       - { type: 'MX',             value: '20 mail2.schmidbauer.cz.' }
       - { type: 'TXT',            value: '"v=spf1 mx:schmidbauer.cz -all"' }
-      # - { type: 'CAA',            value: "128 issue 'letsencrypt.org'" }
-      # - { type: 'CAA',            value: "128 issuewild ';'" }
+      - { type: 'CAA',            value: '128 issue "letsencrypt.org"' }        # value needs double quotes!
+      - { type: 'CAA',            value: '128 issuewild ";"' }                  # value needs double quotes!
       - { name: 'files',          type: 'A',    value: "193.235.207.56" }
       - { name: 'files',          type: 'AAAA', value: "2a03:f80:420:193:235:207:56:1" }
       - { name: 'mon',            type: 'A',    value: "193.235.207.56" }
@@ -58,6 +66,8 @@ nsdzones:
       - { name: 'ns2',            type: 'AAAA', value: "2a03:f80:ed15:151:236:30:179:1" }
       - { name: 'webmail',        type: 'A',    value: "193.235.207.56" }
       - { name: 'webmail',        type: 'AAAA', value: "2a03:f80:420:193:235:207:56:1" }
+      - { name: 'mta-sts',        type: 'A',    value: "151.236.30.179" }
+      - { name: 'mta-sts',        type: 'AAAA', value: "2a03:f80:ed15:151:236:30:179:1" }
       - { name: '*',              type: 'A',    value: "193.235.207.51" }
       - { name: '*',              type: 'AAAA', value: "2a03:f80:420:193:235:207:51:1" }
       - { name: '_dmarc',         type: 'TXT',  value: '"v=DMARC1;p=quarantine;pct=100;rua=mailto:postmaster@schmidbauer.cz;"' }
@@ -77,6 +87,12 @@ nsdzones:
       - { name: '_465._tcp.mail2',  type: 'CNAME',value: "tlsa._dane.mail2.schmidbauer.cz." }
       - { name: '_587._tcp.mail2',  type: 'CNAME',value: "tlsa._dane.mail2.schmidbauer.cz." }
       - { name: '_993._tcp.mail2',  type: 'CNAME',value: "tlsa._dane.mail2.schmidbauer.cz." }
+
+      - { name: 'autoconfig.schmidbauer.cz',       type: 'CNAME', value: "mail.schmidbauer.cz." }
+      - { name: '_submission._tcp.schmidbauer.cz', type: 'SRV',   value: "0 1 465 mail.schmidbauer.cz" }
+      - { name: '_submission._tcp.schmidbauer.cz', type: 'SRV',   value: "5 1 587	mail.schmidbauer.cz" }
+      - { name: '_imaps._tcp.schmidbauer.cz',      type: 'SRV',   value: "0 1 993	mail.schmidbauer.cz" }
+      - { name: '_imap._tcp.schmidbauer.cz',       type: 'SRV',   value: "0 1 143 mail.schmidbauer.cz" }
 
       - { name: 'files.schmidbauer.cz',     type: 'SSHFP',  value: "4 1 6845f54633d096586cd7bdcad19ec20cc21e6cda" }
       - { name: 'files.schmidbauer.cz',     type: 'SSHFP',  value: "4 2 356ffb4137a05255837851005da41689bf5163639887fde7051bfd23a7cbf4a3" }
@@ -103,14 +119,14 @@ unbound_acl:
   - 0.0.0.0/0 allow
   - ::0/0 allow
 
-unbound_stub_zones:
-  - { name: "schmidbauer.cz", stub_address: '127.0.0.1@53' }  # Pass to NSD
+# unbound_stub_zones:
+#   - { name: "schmidbauer.cz", stub_address: '127.0.0.1@53' }  # Pass to NSD
 
 unbound_forward_zones:
   - { name: ".", forward_first: "yes", forward_addresses: "1.1.1.1,9.9.9.9" }
 
-unbound_local_zones:
-  - { name: "schmidbauer.cz", option: "nodefault" }
+# unbound_local_zones:
+#   - { name: "schmidbauer.cz", option: "nodefault" }
 
 unbound_ipv6: 'yes'
 unbound_auto_trust_anchor_file: /var/unbound/db/root.key
@@ -129,4 +145,4 @@ unbound_harden_dnssec_stripped: 'yes'
 unbound_aggressive_nsec: 'yes'
 unbound_log_queries: 'no'
 unbound_log_replies: 'no'
-unbound_use_adblocks: true
+unbound_use_adblocks: false
