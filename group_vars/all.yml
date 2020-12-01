@@ -32,7 +32,7 @@ nsdzones:
     nsd_dnssec_ksk_algo_bits: 4096
     #zone
     soa: ns.schmidbauer.cz. admin.schmidbauer.cz.
-    serial: 2011010249
+    serial: 2011010250
     refresh: 28800
     retry: 7200
     expire: 1209600
@@ -46,6 +46,8 @@ nsdzones:
       - { type: 'TXT',            value: '"v=spf1 mx:schmidbauer.cz -all"' }
       - { type: 'CAA',            value: '128 issue "letsencrypt.org"' }        # value needs double quotes!
       - { type: 'CAA',            value: '128 issuewild ";"' }                  # value needs double quotes!
+      - { type: 'A',              value: "193.235.207.51" }                     # apex record
+      - { type: 'AAAA',           value: "2a03:f80:420:193:235:207:51:1" }      # apex record
       - { name: 'files',          type: 'A',    value: "193.235.207.56" }
       - { name: 'files',          type: 'AAAA', value: "2a03:f80:420:193:235:207:56:1" }
       - { name: 'mon',            type: 'A',    value: "193.235.207.56" }
@@ -68,8 +70,7 @@ nsdzones:
       - { name: 'webmail',        type: 'AAAA', value: "2a03:f80:420:193:235:207:56:1" }
       - { name: 'mta-sts',        type: 'A',    value: "151.236.30.179" }
       - { name: 'mta-sts',        type: 'AAAA', value: "2a03:f80:ed15:151:236:30:179:1" }
-      - { name: '*',              type: 'A',    value: "193.235.207.51" }
-      - { name: '*',              type: 'AAAA', value: "2a03:f80:420:193:235:207:51:1" }
+
       - { name: '_dmarc',         type: 'TXT',  value: '"v=DMARC1;p=quarantine;pct=100;rua=mailto:postmaster@schmidbauer.cz;"' }
       - { name: '20201114._domainkey',    type: 'TXT',    value: '"v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDHMZuvph/1d1JvPdsXhCbR83tk0VBc5lh0/nJk5mfySSb3Jtol6TlTLhfN3xamalsCIEBVXIj/N/B5HSVGMFNCEu2nAvkw353o2jBuav3zIk3BHg2xu5dfhBcufLTUDgr84vz+1ijOU2a+N/50NCraeCq5CM0SZNdwY/nRnUKlvQIDAQAB;"' }
 
