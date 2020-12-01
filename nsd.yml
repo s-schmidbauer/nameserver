@@ -59,7 +59,7 @@
       tags: nsd
 
 - name: Re-create DNSSEC keys
-  hosts: 193.235.207.51
+  hosts: nsd_primary
   user: puffy
   become: true
   become_method: doas
@@ -85,13 +85,6 @@
       with_dict: "{{ nsdzones }}"
       tags: nsd
 
-- name: Sign zones
-  hosts: 193.235.207.51
-  user: puffy
-  become: true
-  become_method: doas
-
-  tasks:
     - name: "nsd - Sign zones"
       shell: |
         ZSK=K{{ item.key }}.{{ item.value.nsd_zsk_id }}
@@ -102,6 +95,11 @@
       register: nsd_sign_zones
       when: nsd_dnssec_sign_zones|bool == true
       with_dict: "{{ nsdzones }}"
+      tags: nsd
+
+    - name: "nsd - Notify partner"
+      shell: nsd-control notify
+      when: nsd_sign_zones is changed
       tags: nsd
 
 - name: Configure nsd and reload zones
@@ -131,9 +129,4 @@
     - name: "nsd - Reload zones"
       shell: nsd-control reload
       register: nsd_config_reload
-      tags: nsd
-
-    - name: "nsd - Notify partner"
-      shell: nsd-control notify
-      when: nsd_sign_zones is changed
       tags: nsd
