@@ -32,7 +32,7 @@ nsdzones:
     nsd_dnssec_ksk_algo_bits: 4096
     #zone
     soa: ns.schmidbauer.cz. admin.schmidbauer.cz.
-    serial: 2011010248
+    serial: 2011010249
     refresh: 28800
     retry: 7200
     expire: 1209600
@@ -91,6 +91,7 @@ nsdzones:
       - { name: '_smtp._tls',       type: 'TXT',   value: '"v=TLSRPTv1; rua=mailto:admin@schmidbauer.cz"' }     # value needs double quotes!
       - { name: '_mta-sts',         type: 'TXT',   value: '"v=STSv1; id=29112020"' }      # serial to be updated with policy change -- value needs double quotes!
       - { name: 'autoconfig',       type: 'CNAME', value: "mail.schmidbauer.cz." }
+      - { name: 'status',           type: 'CNAME', value: "stats.uptimerobot.com." }
 
       - { name: '_submission._tcp', type: 'SRV',   value: "0 1 465 mail.schmidbauer.cz" }
       - { name: '_submission._tcp', type: 'SRV',   value: "5 1 587 mail.schmidbauer.cz" }
