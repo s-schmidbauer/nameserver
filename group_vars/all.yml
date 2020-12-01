@@ -8,6 +8,10 @@ nsd_port: 53
 nsd_master_ipv4: 193.235.207.51
 nsd_slave_ipv4: 151.236.30.179
 
+# nsd_primary    is a group in the inventory containing the master
+# nsd_secondary  is a group in the inventory containing the slaves
+
+
 # Use predefined key
 nsd_keys:
   - { name: seckey, algo: hmac-sha256, secret: "y6uRlBd1Y68eO9gIOEFGKmI5R1jg8Npq0iLMOSG2ViFQThjXgH0K0s4ffUOZlmMVtBQ+4Cmncasj7QysFhpPxA==" }
