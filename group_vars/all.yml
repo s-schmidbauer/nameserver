@@ -28,15 +28,15 @@ nsdzones:
   schmidbauer.cz:
     #dnssec
     nsd_dnssec_signed_zone: true     # Uses the file [zone].zone.signed. Re(signed) on or not.
-    nsd_ksk_id: +010+29270           # Current ID, Looks for file in /var/nsd/zones
-    nsd_zsk_id: +010+06146           # Current ID, Looks for file in /var/nsd/zones
-    nsd_dnssec_zsk_algo: RSASHA512
+    nsd_ksk_id: +010+59645           # Current ID, Looks for file in /var/nsd/zones
+    nsd_zsk_id: +010+58610           # Current ID, Looks for file in /var/nsd/zones
     nsd_dnssec_ksk_algo: RSASHA512
-    nsd_dnssec_zsk_algo_bits: 2048
+    nsd_dnssec_zsk_algo: RSASHA512
     nsd_dnssec_ksk_algo_bits: 4096
+    nsd_dnssec_zsk_algo_bits: 2048
     #zone
     soa: ns.schmidbauer.cz. admin.schmidbauer.cz.
-    serial: 2011010252
+    serial: 2011010253
     refresh: 28800
     retry: 7200
     expire: 1209600
