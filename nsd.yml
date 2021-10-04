@@ -93,7 +93,7 @@
       args:
         chdir: /var/nsd/zones
       register: nsd_sign_zones
-      when: nsd_dnssec_sign_zones|bool == true
+      when: nsd_dnssec_sign_zones|bool == true and nsd_create_zones is changed
       with_dict: "{{ nsdzones }}"
       tags: nsd
 

@@ -5,7 +5,7 @@ nsd_ips:
   - ::1
   - 2a03:f80:ed15:151:236:30:179:1
 
-nsd_use_tls: ns2.schmidbauer.cz
+# nsd_use_tls: ns2.schmidbauer.cz
 
 nsd_include_pattern: replicate_from
 

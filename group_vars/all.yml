@@ -28,12 +28,12 @@ nsdzones:
   schmidbauer.cz:
     #dnssec
     nsd_dnssec_signed_zone: true     # Uses the file [zone].zone.signed. Re(signed) on or not.
-    nsd_ksk_id: +010+29270           # Current ID, Looks for file in /var/nsd/zones
-    nsd_zsk_id: +010+06146           # Current ID, Looks for file in /var/nsd/zones
-    nsd_dnssec_zsk_algo: RSASHA512
+    nsd_ksk_id: +010+59645           # Current ID, Looks for file in /var/nsd/zones
+    nsd_zsk_id: +010+58610           # Current ID, Looks for file in /var/nsd/zones
     nsd_dnssec_ksk_algo: RSASHA512
-    nsd_dnssec_zsk_algo_bits: 2048
+    nsd_dnssec_zsk_algo: RSASHA512
     nsd_dnssec_ksk_algo_bits: 4096
+    nsd_dnssec_zsk_algo_bits: 2048
     #zone
     soa: ns.schmidbauer.cz. admin.schmidbauer.cz.
     serial: 2011010253
@@ -72,6 +72,8 @@ nsdzones:
       - { name: 'mail2',          type: 'AAAA', value: "2a03:f80:ed15:151:236:30:179:1" }
       - { name: 'ns2',            type: 'A',    value: "151.236.30.179" }
       - { name: 'ns2',            type: 'AAAA', value: "2a03:f80:ed15:151:236:30:179:1" }
+      - { name: 'stream',         type: 'A',    value: "193.235.207.51" }
+      - { name: 'stream',         type: 'AAAA', value: "2a03:f80:420:193:235:207:51:1" }
       - { name: 'webmail',        type: 'A',    value: "193.235.207.56" }
       - { name: 'webmail',        type: 'AAAA', value: "2a03:f80:420:193:235:207:56:1" }
       - { name: 'mta-sts',        type: 'A',    value: "151.236.30.179" }
@@ -127,8 +129,7 @@ nsdzones:
       - { name: 'www2.schmidbauer.cz',      type: 'SSHFP',  value: "4 2 7afb602481b0a438058131499f7f607962bce6540fd458bd1dffce9e7138a7ce" }
 
 unbound_acl:
-  - 0.0.0.0/0 allow
-  - ::0/0 allow
+  - 37.188.0.0/16 allow       # O2 Czechia
 
 # unbound_stub_zones:
 #   - { name: "schmidbauer.cz", stub_address: '127.0.0.1@53' }  # Pass to NSD
@@ -156,4 +157,5 @@ unbound_harden_dnssec_stripped: 'yes'
 unbound_aggressive_nsec: 'yes'
 unbound_log_queries: 'no'
 unbound_log_replies: 'no'
-unbound_use_adblocks: false
+unbound_use_adblocks: true
+unbound_validate_dnssec: true
