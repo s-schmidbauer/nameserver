@@ -22,6 +22,12 @@
         dest: "{{ unbound_root_hints }}"
       tags: unbound
 
+    - name: "unbound - Create auto trust anchor file"
+      shell: unbound-anchor
+      register: unbound_auto_trust_anchor
+      when: unbound_validate_dnssec | bool
+      tags: unbound
+
     - name: "unbound - Copy AdBlocks commands"
       copy:
         src: "files/{{ item }}"

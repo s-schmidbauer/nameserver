@@ -157,3 +157,4 @@ unbound_aggressive_nsec: 'yes'
 unbound_log_queries: 'no'
 unbound_log_replies: 'no'
 unbound_use_adblocks: false
+unbound_validate_dnssec: true
