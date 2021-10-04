@@ -127,8 +127,7 @@ nsdzones:
       - { name: 'www2.schmidbauer.cz',      type: 'SSHFP',  value: "4 2 7afb602481b0a438058131499f7f607962bce6540fd458bd1dffce9e7138a7ce" }
 
 unbound_acl:
-  - 0.0.0.0/0 allow
-  - ::0/0 allow
+  - 37.188.0.0/16 allow       # O2 Czechia
 
 # unbound_stub_zones:
 #   - { name: "schmidbauer.cz", stub_address: '127.0.0.1@53' }  # Pass to NSD
@@ -156,5 +155,5 @@ unbound_harden_dnssec_stripped: 'yes'
 unbound_aggressive_nsec: 'yes'
 unbound_log_queries: 'no'
 unbound_log_replies: 'no'
-unbound_use_adblocks: false
+unbound_use_adblocks: true
 unbound_validate_dnssec: true
