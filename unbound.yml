@@ -6,9 +6,10 @@
   become_method: doas
 
   tasks:
-    - name: "unbound - Create trust anchor"
+    - name: "unbound - Create auto trust anchor file"
       shell: unbound-anchor
-      register: unbound_anchor
+      register: unbound_auto_trust_anchor
+      when: unbound_validate_dnssec | bool
       tags: unbound
 
     - name: "unbound - Control setup"
@@ -20,12 +21,6 @@
       template:
         src: "root.hints"
         dest: "{{ unbound_root_hints }}"
-      tags: unbound
-
-    - name: "unbound - Create auto trust anchor file"
-      shell: unbound-anchor
-      register: unbound_auto_trust_anchor
-      when: unbound_validate_dnssec | bool
       tags: unbound
 
     - name: "unbound - Copy AdBlocks commands"
