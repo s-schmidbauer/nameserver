@@ -23,6 +23,15 @@
         dest: "{{ unbound_root_hints }}"
       tags: unbound
 
+    - name: "unbound - Create log file, if required"
+      file:
+        path: "{{ unbound_logfile }}"
+        state: touch
+        owner: "{{ unbound_user }}"
+        group: "{{ unbound_user }}"
+        mode: '0660'
+      tags: unbound
+
     - name: "unbound - Copy AdBlocks commands"
       copy:
         src: "files/{{ item }}"
@@ -34,18 +43,22 @@
       when: unbound_use_adblocks | bool
       tags: unbound
 
-    # - name: "unbound - Get AdBlocks"
-    #   command: /usr/local/bin/adblocks_make.sh
-    #   when: unbound_use_adblocks | bool
-    #   become_user: root
-    #   tags: unbound
-
     - name: "unbound - Cronjob to make AdBlocks"
       cron:
         name: "make adblocks file"
         special_time: daily
         job: "/usr/local/bin/adblocks_make.sh"
       when: unbound_use_adblocks | bool
+      tags: unbound
+
+    - name: "unbound - Cronjob to copy TLS files"
+      cron:
+        name: "copy tls file"
+        special_time: daily
+        job: "/bin/cp /etc/ssl/private/{{ unbound_use_tls }}.key {{ unbound_tls_location }} &&
+              /bin/cp /etc/ssl/{{ unbound_use_tls }}.fullchain.pem {{ unbound_tls_location }} &&
+              /bin/cp {{ unbound_cert_bundle }} {{ unbound_tls_location }}"
+      when: unbound_use_tls is defined
       tags: unbound
 
     - name: "unbound - Configure /var/unbound/etc/unbound.conf"

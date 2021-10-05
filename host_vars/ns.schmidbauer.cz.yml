@@ -18,3 +18,7 @@ unbound_use_tls: ns.schmidbauer.cz
 unbound_interfaces:
   - 193.235.207.51
   - 2a03:f80:420:193:235:207:51:2
+
+unbound_interfaces_tls:
+  - 193.235.207.51
+  - 2a03:f80:420:193:235:207:51:2
