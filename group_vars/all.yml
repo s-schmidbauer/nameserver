@@ -135,6 +135,9 @@ unbound_acl:
 unbound_forward_zones:
   - { name: ".", forward_first: "yes", forward_addresses: "1.1.1.1,9.9.9.9" }
 
+unbound_forward_zones_tls:
+  - { name: ".", forward_first: "yes", forward_addresses: "9.9.9.9@853,149.112.112.112@853,1.1.1.1@853,2620:fe::fe@853,2606:4700:4700::1111@85,9.9.9.9" }
+
 # unbound_local_zones:
 #   - { name: "schmidbauer.cz", option: "nodefault" }
 
@@ -157,3 +160,4 @@ unbound_log_queries: 'no'
 unbound_log_replies: 'no'
 unbound_use_adblocks: true
 unbound_validate_dnssec: true
+unbound_forward_tls_upstream: 'yes'

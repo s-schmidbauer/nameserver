@@ -4,6 +4,11 @@ server:
   interface: {{ interface }}
 {% endfor %}
 {% endif %}
+{% if unbound_interfaces_tls is defined %}
+{% for interface in unbound_interfaces_tls %}
+  interface: {{ interface }}@{{ unbound_tls_port }}
+{% endfor %}
+{% endif %}
 {% if unbound_acl is defined %}
 {% for acl in unbound_acl %}
   access-control: {{ acl }}
@@ -27,11 +32,11 @@ server:
 
   #TLS (DoT)
 {% if unbound_use_tls is defined %}
+  tls-upstream: yes
   tls-service-key: "/etc/ssl/private/{{ unbound_use_tls }}.key"
   tls-service-pem: "/etc/ssl/{{ unbound_use_tls }}.fullchain.pem"
-{% if unbound_use_tls is defined %}
+  tls-cert-bundle: "{{ unbound_cert_bundle }}"
   tls-port: {{ unbound_tls_port }}
-{% endif %}
 {% endif %}
   #do-udp: no
   #udp-upstream-without-downstream: yes
@@ -102,8 +107,8 @@ stub-zone:
 {% endfor %}
 {% endif %}
 
-{% if unbound_forward_zones is defined %}
-{% for zone in unbound_forward_zones %}
+{% if unbound_forward_zones_tls is defined %}
+{% for zone in unbound_forward_zones_tls %}
 forward-zone:
   name: "{{ zone.name }}"
   forward-first: {{ zone.forward_first }}
@@ -112,6 +117,21 @@ forward-zone:
 {% for address in addresses %}
   forward-addr: {{ address }}
 {% endfor %}
+  forward-tls-upstream: {{ unbound_forward_tls_upstream }}
+{% endif %}
+{% endfor %}
+
+{% if unbound_forward_zones is defined %}
+{% for zone in unbound_forward_zones_tls %}
+forward-zone:
+  name: "{{ zone.name }}"
+  forward-first: {{ zone.forward_first }}
+{% if zone.forward_addresses is defined %}
+{% set addresses = zone.forward_addresses.split(',') %}
+{% for address in addresses %}
+  forward-addr: {{ address }}
+{% endfor %}
+  forward-tls-upstream: {{ unbound_forward_tls_upstream }}
 {% endif %}
 {% endfor %}
 {% endif %}
