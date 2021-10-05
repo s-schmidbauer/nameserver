@@ -33,8 +33,8 @@ server:
   #TLS (DoT)
 {% if unbound_use_tls is defined %}
   tls-upstream: yes
-  tls-service-key: "/etc/ssl/private/{{ unbound_use_tls }}.key"
-  tls-service-pem: "/etc/ssl/{{ unbound_use_tls }}.fullchain.pem"
+  tls-service-key: "{{ unbound_tls_location }}/{{ unbound_use_tls }}.key"
+  tls-service-pem: "{{ unbound_tls_location }}/{{ unbound_use_tls }}.fullchain.pem"
   tls-cert-bundle: "{{ unbound_cert_bundle }}"
   tls-port: {{ unbound_tls_port }}
 {% endif %}
@@ -86,17 +86,31 @@ server:
   ip-ratelimit: 100
 
 {% if unbound_log_queries is defined %}
+  # logging
   log-queries: {{ unbound_log_queries }}
 {% endif %}
 {% if unbound_log_replies is defined %}
   log-replies: {{ unbound_log_replies }}
+{% endif %}
+{% if unbound_logfile is defined %}
+  logfile: {{ unbound_log_file }}
+{% endif %}
+
+{% if unbound_use_unbound_adblock is defined %}
+  # Required modules for RPZ
+  module-config: "respip validator iterator"
+  rpz:
+    name: "unbound-adblock"
+    zonefile: "/var/unbound/db/adblock.rpz"
+    rpz-log: yes
+    rpz-log-name: "unbound-adblock"
 {% endif %}
 
 {% if unbound_remote_control is defined %}
   remote-control:
     control-enable: {{ unbound_remote_control }}
     control-use-cert: no
-    control-interface: /var/run/unbound.sock
+    control-interface: 127.0.0.1
 {% endif %}
 
 {% if unbound_stub_zones is defined %}
@@ -134,4 +148,6 @@ forward-zone:
   forward-tls-upstream: {{ unbound_forward_tls_upstream }}
 {% endif %}
 {% endfor %}
+{% endif %}
+
 {% endif %}
