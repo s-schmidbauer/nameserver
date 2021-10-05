@@ -127,13 +127,14 @@ nsdzones:
       - { name: 'www2.schmidbauer.cz',      type: 'SSHFP',  value: "4 2 7afb602481b0a438058131499f7f607962bce6540fd458bd1dffce9e7138a7ce" }
 
 unbound_acl:
-  - 37.188.0.0/16 allow       # O2 Czechia
+  - 37.188.0.0/16 allow       # O2 Czechia mobile
+  - 194.228.0.0/16 allow      # O2 Czechia fibre
 
 # unbound_stub_zones:
 #   - { name: "schmidbauer.cz", stub_address: '127.0.0.1@53' }  # Pass to NSD
 
-unbound_forward_zones:
-  - { name: ".", forward_first: "yes", forward_addresses: "1.1.1.1,9.9.9.9" }
+# unbound_forward_zones:
+#   - { name: ".", forward_first: "yes", forward_addresses: "1.1.1.1,9.9.9.9" }
 
 unbound_forward_zones_tls:
   - { name: ".", forward_first: "yes", forward_addresses: "9.9.9.9@853,149.112.112.112@853,1.1.1.1@853,2620:fe::fe@853,2606:4700:4700::1111@85,9.9.9.9" }
@@ -141,12 +142,15 @@ unbound_forward_zones_tls:
 # unbound_local_zones:
 #   - { name: "schmidbauer.cz", option: "nodefault" }
 
+unbound_user: '_unbound'
 unbound_ipv6: 'yes'
+unbound_tls_location: /var/unbound/etc    # files will be copied here (chroot)
 unbound_auto_trust_anchor_file: /var/unbound/db/root.key
 unbound_root_hints: /var/unbound/etc/root.hints
+unbound_cert_bundle: /var/unbound/etc/cert.pem
 unbound_do_not_query_localhost: 'no'
 unbound_remote_control: 'yes'
-# unbound_use_tls: ns.schmidbauer.cz
+unbound_use_tls: ns.schmidbauer.cz
 unbound_tls_port: 853
 unbound_hide_identity: 'yes'
 unbound_hide_version: 'yes'
@@ -156,8 +160,10 @@ unbound_deny_any: 'yes'
 unbound_qname_minimisation: 'yes'
 unbound_harden_dnssec_stripped: 'yes'
 unbound_aggressive_nsec: 'yes'
+# unbound_logfile: /var/unbound/unbound.log    # file to be stored here (chroot)
 unbound_log_queries: 'no'
 unbound_log_replies: 'no'
-unbound_use_adblocks: true
+unbound_use_unbound_adblock: true
+unbound_use_adblocks: false
 unbound_validate_dnssec: true
 unbound_forward_tls_upstream: 'yes'
